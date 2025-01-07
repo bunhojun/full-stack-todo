@@ -27,3 +27,9 @@ $ nest build && yarn typeorm migration:revert -d ./db/data-source.ts
 ```bash
 $ nest build && yarn typeorm schema:drop -d ./db/data-source.ts
 ```
+
+## Seed
+
+```bash
+$ yarn seed --name GenesisSeeder
+```
