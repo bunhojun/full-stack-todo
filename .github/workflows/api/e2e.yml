@@ -2,6 +2,9 @@ name: e2e tests
 
 on:
   pull_request:
+    paths:
+      - 'api/**'
+      - '.github/workflows/api/e2e.yml'
 
 jobs:
   test:
@@ -9,15 +12,13 @@ jobs:
     defaults:
       run:
         shell: bash
+        working-directory: 'api'
     steps:
       - uses: actions/checkout@v4 # checks-out the repository under $GITHUB_WORKSPACE
-
       - uses: actions/setup-node@v4
         with:
           node-version: '18'
       - run: yarn
-
       - run: docker compose up -d test-db
-
       - run: yarn build
       - run: yarn test:e2e -- --forceExit
