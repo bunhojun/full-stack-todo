@@ -33,7 +33,7 @@ export class UsersService {
     return this.findOneUser(id);
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} user`;
+  async remove(id: number) {
+    await this.usersRepository.delete(id);
   }
 }
