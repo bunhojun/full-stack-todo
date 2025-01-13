@@ -6,7 +6,8 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { buildTestDataSource, seederOptions } from './setup';
 import { DataSource } from 'typeorm';
 import { runSeeders } from 'typeorm-extension';
-import { AppModule } from '@/app.module';
+import { AppController } from '@/app.controller';
+import { AppService } from '@/app.service';
 
 describe('AppController (e2e)', () => {
   let app: INestApplication;
@@ -28,10 +29,9 @@ describe('AppController (e2e)', () => {
           },
           inject: [ConfigService],
         }),
-        AppModule,
       ],
-      controllers: [],
-      providers: [],
+      controllers: [AppController],
+      providers: [AppService],
     }).compile();
 
     app = moduleFixture.createNestApplication();
@@ -47,7 +47,7 @@ describe('AppController (e2e)', () => {
       // add one when necessary
       // seeds: [],
     });
-  }, 30000); // Increase timeout to 30 seconds
+  });
 
   afterAll(async () => {
     await app.close();
