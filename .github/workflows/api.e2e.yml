@@ -1,10 +1,10 @@
-name: test
+name: e2e tests
 
 on:
   pull_request:
     paths:
       - 'api/**'
-      - '.github/workflows/test.yml'
+      - '.github/workflows/api/e2e.yml'
 
 jobs:
   test:
@@ -21,4 +21,4 @@ jobs:
       - run: yarn
       - run: docker compose up -d test-db
       - run: yarn build
-      - run: yarn test -- --forceExit
+      - run: yarn test:e2e --forceExit
