@@ -17,8 +17,13 @@ jobs:
       - uses: actions/checkout@v4 # checks-out the repository under $GITHUB_WORKSPACE
       - uses: actions/setup-node@v4
         with:
-          node-version: '18'
+          node-version: '20'
       - run: yarn
       - run: docker compose up -d test-db
+      - run: |
+          until docker exec test-db pg_isready; do
+            echo "Waiting for database to be ready..."
+            sleep 2
+          done
       - run: yarn build
       - run: yarn test:e2e --forceExit
