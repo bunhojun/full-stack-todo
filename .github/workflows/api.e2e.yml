@@ -21,7 +21,7 @@ jobs:
       - run: yarn
       - run: docker compose up -d test-db
       - run: |
-          until docker exec test-db pg_isready; do
+          until docker exec test-db pg_isready -h localhost -p 5433; do
           echo "Waiting for database to be ready..."
             sleep 2
             done
