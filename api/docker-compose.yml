@@ -14,6 +14,7 @@ services:
 
   test-db:
     image: postgres:latest
+    container_name: test-db
     environment:
       - POSTGRES_USER=test_user
       - POSTGRES_PASSWORD=test_password
