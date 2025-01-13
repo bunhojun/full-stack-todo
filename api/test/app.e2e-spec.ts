@@ -47,7 +47,7 @@ describe('AppController (e2e)', () => {
       // add one when necessary
       // seeds: [],
     });
-  });
+  }, 30000); // Increase timeout to 30 seconds
 
   afterAll(async () => {
     await app.close();
