@@ -1,0 +1,35 @@
+name: lint
+
+on:
+  pull_request:
+    branches-ignore:
+      - 'renovate/*'
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        shell: bash
+        working-directory: 'api'
+    steps:
+      - uses: actions/checkout@v4 # checks-out the repository under $GITHUB_WORKSPACE
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+      - run: yarn
+
+      - name: format
+        run: yarn format
+
+      - name: auto commit
+        uses: stefanzweifel/git-auto-commit-action@v5
+        with:
+          commit_message: Auto commit with fmt
+          branch: ${{ github.head_ref }}
+
+      - name: lint
+        uses: reviewdog/action-eslint@v1
+        with:
+          eslint_flags: '"{src,apps,libs,test}/**/*.ts" --fix'
+          level: warning
