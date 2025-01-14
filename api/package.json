@@ -7,7 +7,7 @@
   "license": "UNLICENSED",
   "scripts": {
     "build": "nest build",
-    "format": "prettier --write \\\\\\\"api/src/**/*.ts\\\\\\\" \\\\\\\"api/test/**/*.ts\\\\\\\"",
+    "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
     "seed": "nest build && ts-node -r tsconfig-paths/register ./node_modules/typeorm-extension/bin/cli.cjs seed:run -d ./db/data-source-seed.ts",
     "start": "nest start",
     "start:dev": "nest start --watch",
