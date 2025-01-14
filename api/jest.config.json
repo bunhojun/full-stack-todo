@@ -3,12 +3,11 @@
   "verbose": true,
   "rootDir": ".",
   "testEnvironment": "node",
-  "testRegex": ".e2e-spec.ts$",
+  "testRegex": "^(?!.*\\.e2e-spec\\.ts$).*\\.spec\\.ts$",
   "transform": {
     "^.+\\.ts$": "ts-jest"
   },
   "moduleNameMapper": {
-    "^@/(.*)$": "<rootDir>/../src/$1"
-  },
-  "testTimeout": 10000
+    "^@/(.*)$": "<rootDir>/src/$1"
+  }
 }
