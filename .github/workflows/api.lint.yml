@@ -36,5 +36,6 @@ jobs:
       - name: lint
         uses: reviewdog/action-eslint@v1
         with:
+          workdir: 'api'
           eslint_flags: '"{src,apps,libs,test}/**/*.ts" --fix'
           level: warning
