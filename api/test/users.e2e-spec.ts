@@ -8,6 +8,11 @@ import { buildTestDataSource, seederOptions } from './setup';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { UsersModule } from '@/users/users.module';
 import { User } from '@/users/entities/user.entity';
+import { AuthModule } from '@/auth/auth.module';
+import { MockAuthGuard } from '@/auth/guards/mock.guard';
+import { JwtAuthGuard } from '@/auth/guards/jwt-auth.guard';
+import { JwtStrategy } from '@/auth/strategies/jwt.strategy';
+import { MockJwtStrategy } from '@/auth/strategies/mock-jwt.strategy';
 
 describe('UsersController (e2e)', () => {
   let app: INestApplication;
@@ -29,11 +34,17 @@ describe('UsersController (e2e)', () => {
           },
           inject: [ConfigService],
         }),
+        AuthModule,
         UsersModule,
       ],
       controllers: [],
       providers: [],
-    }).compile();
+    })
+      .overrideProvider(JwtAuthGuard)
+      .useClass(MockAuthGuard)
+      .overrideProvider(JwtStrategy)
+      .useClass(MockJwtStrategy)
+      .compile();
 
     app = moduleFixture.createNestApplication();
     app.useGlobalPipes(

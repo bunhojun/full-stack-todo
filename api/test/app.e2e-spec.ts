@@ -8,6 +8,8 @@ import { DataSource } from 'typeorm';
 import { runSeeders } from 'typeorm-extension';
 import { AppController } from '@/app.controller';
 import { AppService } from '@/app.service';
+import { JwtAuthGuard } from '@/auth/guards/jwt-auth.guard';
+import { MockAuthGuard } from '@/auth/guards/mock.guard';
 
 describe('AppController (e2e)', () => {
   let app: INestApplication;
@@ -32,7 +34,10 @@ describe('AppController (e2e)', () => {
       ],
       controllers: [AppController],
       providers: [AppService],
-    }).compile();
+    })
+      .overrideProvider(JwtAuthGuard)
+      .useClass(MockAuthGuard)
+      .compile();
 
     app = moduleFixture.createNestApplication();
     app.useGlobalPipes(
