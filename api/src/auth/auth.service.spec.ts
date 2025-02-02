@@ -23,7 +23,6 @@ describe('AuthService', () => {
           imports: [ConfigModule],
           useFactory: (configService: ConfigService) => ({
             secret: configService.get<string>('JWT_AT_SECRET'),
-            signOptions: { expiresIn: '60s' },
           }),
           inject: [ConfigService],
         }),

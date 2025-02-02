@@ -13,7 +13,7 @@ async function bootstrap() {
     }),
   );
 
-  app.use(cookieParser());
+  app.use(cookieParser()); // this adds cookies to the request object
 
   // swagger
   const config = new DocumentBuilder()
