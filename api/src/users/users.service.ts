@@ -28,6 +28,13 @@ export class UsersService {
     });
   }
 
+  async findOneByEmailForAuth(email: string): Promise<User | null> {
+    return this.usersRepository.findOne({
+      where: { email },
+      select: ['password'],
+    });
+  }
+
   async update(id: number, updateUserDto: UpdateUserDto) {
     await this.usersRepository.update(id, updateUserDto);
     return this.findOneUser(id);
