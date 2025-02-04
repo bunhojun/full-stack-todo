@@ -1,4 +1,4 @@
-import { INestApplication, ValidationPipe } from '@nestjs/common';
+import { HttpStatus, INestApplication, ValidationPipe } from '@nestjs/common';
 import { DataSource } from 'typeorm';
 import { buildTestDataSource, seederOptions } from './setup';
 import { Test, TestingModule } from '@nestjs/testing';
@@ -86,6 +86,12 @@ describe('AuthController (e2e)', () => {
         .expect('set-cookie', /access_token/);
       const authedUser = response.body;
       expect(authedUser.id).toBe(user.id);
+    });
+
+    it('POST: /auth/logout', async () => {
+      await request(app.getHttpServer())
+        .post('/auth/logout')
+        .expect(HttpStatus.NO_CONTENT);
     });
   });
 });
