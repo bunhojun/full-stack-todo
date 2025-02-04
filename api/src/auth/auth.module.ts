@@ -29,7 +29,7 @@ import { JwtStrategy } from '@/auth/strategies/jwt.strategy';
     AuthService,
     LocalStrategy,
     JwtStrategy,
-    JwtAuthGuard,
+    JwtAuthGuard, // this is necessary to override the default JwtAuthGuard during e2e testing
     {
       provide: APP_GUARD,
       useExisting: JwtAuthGuard,
