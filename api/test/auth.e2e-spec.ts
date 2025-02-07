@@ -82,8 +82,34 @@ describe('AuthController (e2e)', () => {
         .send({
           email: 'sdfasd@example.com',
           password: 'password',
-        })
-        .expect('set-cookie', /access_token/);
+        });
+      const accessToken = response.header['set-cookie'][0];
+      const refreshToken = response.header['set-cookie'][1];
+      expect(accessToken).toBeDefined();
+      expect(refreshToken).toBeDefined();
+      const authedUser = response.body;
+      expect(authedUser.id).toBe(user.id);
+    });
+
+    it('POST: /auth/refresh', async () => {
+      const newUser = new User();
+      newUser.email = 'sdfasdaa@example.com';
+      newUser.name = 'Random user';
+      newUser.role = 'normal';
+      newUser.password = 'password';
+      const user = await testDataSource
+        .createEntityManager()
+        .save(User, newUser);
+      const response = await request(app.getHttpServer())
+        .post('/auth/login')
+        .send({
+          email: 'sdfasdaa@example.com',
+          password: 'password',
+        });
+      const accessToken = response.header['set-cookie'][0];
+      const refreshToken = response.header['set-cookie'][1];
+      expect(accessToken).toBeDefined();
+      expect(refreshToken).toBeDefined();
       const authedUser = response.body;
       expect(authedUser.id).toBe(user.id);
     });
