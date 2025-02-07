@@ -13,6 +13,7 @@ import { Public } from '@/auth/decorators/public.decorator';
 import { LocalAuthGuard } from '@/auth/guards/local-auth.guard';
 import { SignInDto } from '@/dto/sign-in.dto';
 import { ConfigService } from '@nestjs/config';
+import { JwtRefreshAuthGuard } from '@/auth/guards/jwt-refresh-auth.guard';
 
 @Controller('auth')
 export class AuthController {
@@ -32,7 +33,35 @@ export class AuthController {
     })
     response: Response,
   ) {
-    const { access_token, refresh_token } = await this.authService.signIn(
+    const { access_token, refresh_token } = await this.authService.createToken(
+      req.user,
+    );
+    const options = {
+      httpOnly: this.configService.get<boolean>('COOKIE_HTTPONLY'),
+      secure: this.configService.get<boolean>('COOKIE_SECURE'),
+      sameSite: this.configService.get('COOKIE_SAMESITE'),
+      domain: this.configService.get<string>('COOKIE_DOMAIN'),
+    };
+    response
+      .cookie('access_token', access_token, {
+        ...options,
+        expires: new Date(Date.now() + 1000 * 60 * 60),
+      })
+      .cookie('refresh_token', refresh_token, {
+        ...options,
+        expires: new Date(Date.now() + 1000 * 60 * 60 * 24),
+      })
+      .json(req.user);
+  }
+
+  @Public()
+  @UseGuards(JwtRefreshAuthGuard)
+  @Post('refresh')
+  async refreshToken(
+    @Request() req: { user: { id: number; email: string } },
+    @Res({ passthrough: true }) response: Response,
+  ) {
+    const { access_token, refresh_token } = await this.authService.createToken(
       req.user,
     );
     const options = {
