@@ -4,6 +4,7 @@ import { UpdateUserDto } from './dto/update-user.dto';
 import { User } from '@/users/entities/user.entity';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
+import { UserWithoutPasswordType } from '@/users/types/user-without-password.type';
 
 @Injectable()
 export class UsersService {
@@ -18,11 +19,11 @@ export class UsersService {
     return this.findOneUser(newUser.id);
   }
 
-  findAll() {
+  findAll(): Promise<UserWithoutPasswordType[]> {
     return this.usersRepository.find();
   }
 
-  findOneUser(id: number) {
+  findOneUser(id: number): Promise<UserWithoutPasswordType> {
     return this.usersRepository.findOne({
       where: { id },
     });
