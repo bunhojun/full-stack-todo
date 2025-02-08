@@ -14,6 +14,7 @@ import { LocalAuthGuard } from '@/auth/guards/local-auth.guard';
 import { SignInDto } from '@/dto/sign-in.dto';
 import { ConfigService } from '@nestjs/config';
 import { JwtRefreshAuthGuard } from '@/auth/guards/jwt-refresh-auth.guard';
+import { UserWithoutPasswordType } from '@/users/types/user-without-password.type';
 
 @Controller('auth')
 export class AuthController {
@@ -23,11 +24,11 @@ export class AuthController {
   ) {}
 
   @Public()
-  @UseGuards(LocalAuthGuard)
+  @UseGuards(LocalAuthGuard) // check the user credentials
   @Post('login')
   async signIn(
     @Body() _signInDto: SignInDto,
-    @Request() req: { user: { id: number; email: string } },
+    @Request() req: { user: UserWithoutPasswordType }, // The user object is attached to the request object after LocalAuthGuard validation
     @Res({
       passthrough: true, // This option is necessary to set cookies in the response
     })
@@ -58,7 +59,7 @@ export class AuthController {
   @UseGuards(JwtRefreshAuthGuard)
   @Post('refresh')
   async refreshToken(
-    @Request() req: { user: { id: number; email: string } },
+    @Request() req: { user: UserWithoutPasswordType }, // The user object is attached to the request object after JwtRefreshAuthGuard validation
     @Res({ passthrough: true }) response: Response,
   ) {
     const { access_token, refresh_token } = await this.authService.createToken(
