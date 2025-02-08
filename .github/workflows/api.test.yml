@@ -1,10 +1,10 @@
-name: test
+name: api test
 
 on:
   pull_request:
     paths:
       - 'api/**'
-      - '.github/workflows/test.yml'
+      - '.github/workflows/api.test.yml'
 
 jobs:
   test:

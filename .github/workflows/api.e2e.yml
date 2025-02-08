@@ -1,10 +1,10 @@
-name: e2e tests
+name: api e2e tests
 
 on:
   pull_request:
     paths:
       - 'api/**'
-      - '.github/workflows/api/e2e.yml'
+      - '.github/workflows/api.e2e.yml'
 
 jobs:
   test:

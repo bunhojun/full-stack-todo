@@ -1,10 +1,10 @@
-name: api lint
+name: frontend react lint
 
 on:
   pull_request:
     paths:
-      - 'api/**'
-      - '.github/workflows/api.lint.yml'
+      - 'frontend-react/**'
+      - '.github/workflows/frontend-react.lint.yml'
     branches-ignore:
       - 'renovate/*'
 
@@ -14,7 +14,7 @@ jobs:
     defaults:
       run:
         shell: bash
-        working-directory: 'api'
+        working-directory: 'frontend-react'
     permissions:
       # Give the default GITHUB_TOKEN write permission to commit and push the
       # added or changed files to the repository.
@@ -39,6 +39,6 @@ jobs:
       - name: lint
         uses: reviewdog/action-eslint@v1
         with:
-          workdir: 'api'
-          eslint_flags: '"{src,apps,libs,test}/**/*.ts" --fix'
+          workdir: 'frontend-react'
+          eslint_flags: '"src/**/*.ts{,x}" --fix'
           level: warning
