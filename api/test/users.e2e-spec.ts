@@ -73,7 +73,6 @@ describe('UsersController (e2e)', () => {
         .send({
           email: 'test@example.com',
           name: 'Test User',
-          role: 'normal',
           password: 'password',
         })
         .expect(201);
@@ -81,7 +80,6 @@ describe('UsersController (e2e)', () => {
       expect(newUser).toHaveProperty('id');
       expect(newUser.email).toEqual('test@example.com');
       expect(newUser.name).toEqual('Test User');
-      expect(newUser.role).toEqual('normal');
       // make sure password is not returned
       expect(newUser).not.toHaveProperty('password');
     });
@@ -91,13 +89,11 @@ describe('UsersController (e2e)', () => {
       await testDataSource.createEntityManager().save(User, {
         email: 'awesdfa@example.com',
         name: 'Random user1',
-        role: 'normal',
         password: 'password',
       });
       await testDataSource.createEntityManager().save(User, {
         email: 'vfdsafdva@example.com',
         name: 'Random user2',
-        role: 'normal',
         password: 'password',
       });
       const length = await testDataSource.createEntityManager().count(User);
@@ -109,7 +105,6 @@ describe('UsersController (e2e)', () => {
       const user = await testDataSource.createEntityManager().save(User, {
         email: 'sdfacsd@example.com',
         name: 'Random user',
-        role: 'normal',
         password: 'password',
       });
       const res = await request(app.getHttpServer())
@@ -117,7 +112,6 @@ describe('UsersController (e2e)', () => {
         .expect(200);
       expect(res.body.email).toEqual(user.email);
       expect(res.body.name).toEqual(user.name);
-      expect(res.body.role).toEqual(user.role);
       // make sure password is not returned
       expect(res.body).not.toHaveProperty('password');
     });
@@ -126,7 +120,6 @@ describe('UsersController (e2e)', () => {
       const user = await testDataSource.createEntityManager().save(User, {
         email: 'sdfasd@example.com',
         name: 'Random user',
-        role: 'normal',
         password: 'password',
       });
       const res = await request(app.getHttpServer())
@@ -137,14 +130,12 @@ describe('UsersController (e2e)', () => {
         .expect(200);
       expect(res.body.email).toEqual(user.email);
       expect(res.body.name).toEqual('Updated name');
-      expect(res.body.role).toEqual(user.role);
     });
 
     it('DELETE: /users/:id', async () => {
       const user = await testDataSource.createEntityManager().save(User, {
         email: 'fawsd@example.com',
         name: 'Random user',
-        role: 'normal',
         password: 'password',
       });
       await request(app.getHttpServer())

@@ -62,7 +62,6 @@ describe('AuthController (e2e)', () => {
     const newUser = new User();
     newUser.email = email;
     newUser.name = 'Random user';
-    newUser.role = 'normal';
     newUser.password = 'password';
     return testDataSource.createEntityManager().save(User, newUser);
   };
