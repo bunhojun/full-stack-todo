@@ -1,4 +1,4 @@
-name: lint
+name: frontend react lint
 
 on:
   pull_request:
