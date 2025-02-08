@@ -4,7 +4,7 @@ on:
   pull_request:
     paths:
       - 'api/**'
-      - '.github/workflows/api/e2e.yml'
+      - '.github/workflows/api.e2e.yml'
 
 jobs:
   test:

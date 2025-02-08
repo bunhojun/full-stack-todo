@@ -2,6 +2,9 @@ name: lint
 
 on:
   pull_request:
+    paths:
+      - 'frontend-react/**'
+      - '.github/workflows/frontend-react.lint.yml'
     branches-ignore:
       - 'renovate/*'
 
