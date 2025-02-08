@@ -14,7 +14,6 @@ import { LocalAuthGuard } from '@/auth/guards/local-auth.guard';
 import { SignInDto } from '@/dto/sign-in.dto';
 import { ConfigService } from '@nestjs/config';
 import { JwtRefreshAuthGuard } from '@/auth/guards/jwt-refresh-auth.guard';
-import { User } from '@/users/entities/user.entity';
 import { UserWithoutPasswordType } from '@/users/types/user-without-password.type';
 
 @Controller('auth')
