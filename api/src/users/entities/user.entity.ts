@@ -7,7 +7,6 @@ import {
 } from 'typeorm';
 import * as bcrypt from 'bcrypt';
 import { saltRounds } from '@/constants';
-import { UserRole } from '@/users/types/user-role.type';
 
 @Entity()
 export class User {
@@ -26,13 +25,6 @@ export class User {
 
   @Column()
   name: string;
-
-  @Column({
-    type: 'enum',
-    enum: Object.values(UserRole),
-    default: UserRole.normal,
-  })
-  role: UserRole;
 
   @CreateDateColumn({
     type: 'timestamp',

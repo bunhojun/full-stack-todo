@@ -12,13 +12,11 @@ export default class GenesisSeeder implements Seeder {
       email: 'test@test.example.com',
       password: 'password!',
       name: 'Jane Doe',
-      role: 'admin',
     });
     await userFactory.save({
       email: 'test2@test.example.com',
       password: 'password!',
       name: 'John Doe',
-      role: 'normal',
     });
   }
 }
