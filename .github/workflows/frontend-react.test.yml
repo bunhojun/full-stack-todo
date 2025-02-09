@@ -4,7 +4,7 @@ on:
   pull_request:
     paths:
       - 'frontend-react/**'
-      - '.github/workflows/frontend-react.lint.yml'
+      - '.github/workflows/frontend-react.test.yml'
 
 jobs:
   test:
