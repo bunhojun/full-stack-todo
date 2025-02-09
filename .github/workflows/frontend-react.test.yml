@@ -1,0 +1,25 @@
+name: frontend react test
+
+on:
+  pull_request:
+    paths:
+      - 'frontend-react/**'
+      - '.github/workflows/frontend-react.lint.yml'
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        shell: bash
+        working-directory: 'frontend-react'
+
+    steps:
+      - uses: actions/checkout@v4 # checks-out the repository under $GITHUB_WORKSPACE
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+      - run: yarn
+
+      - name: format
+        run: yarn build
