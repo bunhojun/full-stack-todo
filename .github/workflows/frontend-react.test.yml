@@ -7,7 +7,7 @@ on:
       - '.github/workflows/frontend-react.test.yml'
 
 jobs:
-  test:
+  check:
     runs-on: ubuntu-latest
     defaults:
       run:

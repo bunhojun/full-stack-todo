@@ -9,7 +9,7 @@ on:
       - 'renovate/*'
 
 jobs:
-  test:
+  check:
     runs-on: ubuntu-latest
     defaults:
       run:

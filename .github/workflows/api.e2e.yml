@@ -7,7 +7,7 @@ on:
       - '.github/workflows/api.e2e.yml'
 
 jobs:
-  test:
+  check:
     runs-on: ubuntu-latest
     defaults:
       run:
