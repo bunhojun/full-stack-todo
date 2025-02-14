@@ -7,7 +7,7 @@ COPY package.json yarn.lock ./
 RUN yarn install --silent --force
 
 COPY . .
-RUN yarn build
+RUN yarn build:migrate
 
 # Runtime Stage
 FROM node:22.11.0-slim
