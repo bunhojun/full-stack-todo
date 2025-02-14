@@ -6,7 +6,7 @@
   "private": true,
   "license": "UNLICENSED",
   "scripts": {
-    "db:migrate": "yarn typeorm migration:run",
+    "db:migrate": "yarn typeorm migration:run -d ./db/data-source.ts",
     "build": "nest build",
     "build:migrate": "nest build && yarn db:migrate",
     "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
