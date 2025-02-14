@@ -14,10 +14,9 @@ FROM node:22.11.0-slim
 
 WORKDIR /app
 
-COPY --from=build /app/dist/src ./dist/src
-
+COPY --from=build /app/dist ./dist
 COPY package.json yarn.lock ./
-RUN yarn install --silent --force --production
+RUN yarn install --silent --force --production # Install only production dependencies
 
 EXPOSE 3000
 CMD ["node", "dist/src/main.js"]
