@@ -19,4 +19,5 @@ COPY package.json yarn.lock ./
 RUN yarn install --silent --force --production # Install only production dependencies
 
 EXPOSE 3000
-CMD ["node", "dist/src/main.js"]
+ENTRYPOINT ["yarn"]
+CMD ["start:prod"]
