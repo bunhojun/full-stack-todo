@@ -1,4 +1,5 @@
-FROM node:22.11.0-slim
+# Build Stage
+FROM node:22.11.0-slim AS build
 
 WORKDIR /app
 
@@ -7,8 +8,16 @@ RUN yarn install --silent --force
 
 COPY . .
 RUN yarn build
-COPY dist .
+
+# Runtime Stage
+FROM node:22.11.0-slim
+
+WORKDIR /app
+
+COPY --from=build /app/dist ./dist
+COPY package.json yarn.lock ./
+RUN yarn install --silent --force --production # Install only production dependencies
 
 EXPOSE 3000
 ENTRYPOINT ["yarn"]
-CMD ["start:dev"]
+CMD ["start:prod"]
