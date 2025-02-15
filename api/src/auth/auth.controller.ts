@@ -40,7 +40,7 @@ export class AuthController {
     const options = {
       httpOnly: this.configService.get<boolean>('COOKIE_HTTPONLY'),
       secure: this.configService.get<boolean>('COOKIE_SECURE'),
-      sameSite: this.configService.get('COOKIE_SAMESITE'),
+      sameSite: this.configService.get('COOKIE_SAME_SITE'),
       domain: this.configService.get<string>('COOKIE_DOMAIN'),
     };
     response
@@ -68,7 +68,7 @@ export class AuthController {
     const options = {
       httpOnly: this.configService.get<boolean>('COOKIE_HTTPONLY'),
       secure: this.configService.get<boolean>('COOKIE_SECURE'),
-      sameSite: this.configService.get('COOKIE_SAMESITE'),
+      sameSite: this.configService.get('COOKIE_SAME_SITE'),
       domain: this.configService.get<string>('COOKIE_DOMAIN'),
     };
     response
