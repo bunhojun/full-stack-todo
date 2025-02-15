@@ -17,6 +17,7 @@ WORKDIR /app
 COPY --from=build /app/dist ./dist
 COPY package.json yarn.lock ./
 RUN yarn install --silent --force --production # Install only production dependencies
+RUN yarn db:migrate
 
 EXPOSE 3000
 ENTRYPOINT ["yarn"]
