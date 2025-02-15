@@ -41,7 +41,7 @@ export const fetcher = async <T>(
       throw res;
     })
     .catch((error) => {
-      alert('Error: ' + error);
+      console.error('Error: ' + error);
       throw error;
     });
 };

@@ -8,7 +8,6 @@
   "scripts": {
     "db:migrate": "yarn typeorm migration:run -d ./db/data-source.ts",
     "build": "nest build",
-    "build:migrate": "nest build && yarn db:migrate",
     "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
     "seed": "nest build && ts-node -r tsconfig-paths/register ./node_modules/typeorm-extension/bin/cli.cjs seed:run -d ./db/data-source-seed.ts",
     "start": "nest start",
