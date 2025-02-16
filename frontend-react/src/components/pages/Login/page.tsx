@@ -1,7 +1,7 @@
 import { ChangeEvent, useState } from 'react';
 import { useMutation } from '@tanstack/react-query';
-import { login } from '@/apis/api.ts';
-import { Navigate } from 'react-router';
+import { login } from '@/apis/auth/api.ts';
+import { Link, Navigate } from 'react-router';
 import { routerPaths } from '@/routes/paths.ts';
 
 export const Login = () => {
@@ -50,6 +50,7 @@ export const Login = () => {
           Submit
         </button>
       </form>
+      need an account? <Link to={`/${routerPaths.signup}`}>Sign up</Link>
     </div>
   );
 };

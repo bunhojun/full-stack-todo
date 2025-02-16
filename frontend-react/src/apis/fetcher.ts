@@ -24,19 +24,23 @@ export const fetcher = async <T>(
         return res.json();
       }
 
+      // TODO distinguish access_token error and other 401 errors
       if (res.status === 401) {
-        // refresh
-        const refreshRes = await fetch(`${baseUrl}/auth/refresh`, {
-          method: 'POST',
-          credentials: 'include',
-        });
-        if (refreshRes.ok) {
-          return fetcher<T>(path, options);
-        } else {
-          window.location.href = routerPaths.login;
-          return;
-        }
+        window.location.href = routerPaths.login;
       }
+      // if (res.status === 401) {
+      //   // refresh
+      //   const refreshRes = await fetch(`${baseUrl}/auth/refresh`, {
+      //     method: 'POST',
+      //     credentials: 'include',
+      //   });
+      //   if (refreshRes.ok) {
+      //     return fetcher<T>(path, options);
+      //   } else {
+      //     window.location.href = routerPaths.login;
+      //     return;
+      //   }
+      // }
 
       throw res;
     })
