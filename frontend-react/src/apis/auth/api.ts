@@ -19,3 +19,13 @@ export const login = async ({
 
   return res;
 };
+
+export const getHello = async () => {
+  const res = await fetcher<string>('/');
+
+  if (!res) {
+    throw new Error('Failed to get hello');
+  }
+
+  return res;
+};
