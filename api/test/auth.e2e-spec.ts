@@ -58,7 +58,7 @@ describe('AuthController (e2e)', () => {
     await testDataSource.destroy();
   });
 
-  const createUser = async (email: string) => {
+  const createUser = async (email: string): Promise<User> => {
     const newUser = new User();
     newUser.email = email;
     newUser.name = 'Random user';
@@ -67,7 +67,26 @@ describe('AuthController (e2e)', () => {
     return testDataSource.createEntityManager().save(User, newUser);
   };
 
+  const login = async (email: string) => {
+    const newUser = await createUser(email);
+    const response = await request(app.getHttpServer())
+      .post('/auth/login')
+      .send({
+        email: newUser.email,
+        password: 'password',
+      });
+    return { accessToken: response.header['set-cookie'][0], user: newUser };
+  };
+
   describe('auth', () => {
+    it('GET: /auth', async () => {
+      const { user, accessToken } = await login('sdca@cdsa.com');
+      const response = await request(app.getHttpServer())
+        .get('/auth')
+        .set('Cookie', accessToken);
+      expect(response.body.id).toBe(user.id);
+    });
+
     it('POST: /auth/login', async () => {
       const user = await createUser('sdfasd@example.com');
       const response = await request(app.getHttpServer())
@@ -128,14 +147,7 @@ describe('AuthController (e2e)', () => {
         .get('/users')
         .expect(HttpStatus.UNAUTHORIZED);
       // then, check if it passes
-      const newUser = await createUser('vfeavfs@example.com');
-      const loginResponse = await request(app.getHttpServer())
-        .post('/auth/login')
-        .send({
-          email: newUser.email,
-          password: 'password',
-        });
-      const accessToken = loginResponse.header['set-cookie'][0];
+      const { accessToken } = await login('vfeavfs@example.com');
       await request(app.getHttpServer())
         .get('/users')
         .set('Cookie', accessToken)

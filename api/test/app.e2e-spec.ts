@@ -15,7 +15,7 @@ describe('AppController (e2e)', () => {
   let app: INestApplication;
   let testDataSource: DataSource;
 
-  beforeEach(async () => {
+  beforeAll(async () => {
     const moduleFixture: TestingModule = await Test.createTestingModule({
       imports: [
         await ConfigModule.forRoot({

@@ -4,12 +4,10 @@ import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import { ValidationPipe } from '@nestjs/common';
 import * as cookieParser from 'cookie-parser';
 import { ConfigService } from '@nestjs/config';
-import { DataSource } from 'typeorm';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
   const configService = app.get(ConfigService);
-  const dataSource = app.get(DataSource);
   app.enableCors({
     origin: configService.get('CORS_ORIGIN').split(','),
     credentials: true,
@@ -33,8 +31,6 @@ async function bootstrap() {
   SwaggerModule.setup('api', app, document, {
     swaggerOptions: { tagsSorter: 'alpha' },
   });
-
-  await dataSource.runMigrations();
 
   await app.listen(3000);
 }
