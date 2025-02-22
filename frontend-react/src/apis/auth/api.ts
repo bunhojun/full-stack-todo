@@ -29,3 +29,19 @@ export const getHello = async () => {
 
   return res;
 };
+
+export const getAuthedUser = async () => {
+  const res = await fetcher<UserWithoutPassword>('/auth');
+
+  if (!res) {
+    throw new Error('Failed to get authed user');
+  }
+
+  return res;
+};
+
+export const logout = async () => {
+  return fetcher('/auth/logout', {
+    method: 'POST',
+  });
+};

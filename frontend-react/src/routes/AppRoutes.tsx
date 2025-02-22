@@ -4,6 +4,7 @@ import { Login } from '@/components/pages/Login/page.tsx';
 import { routerPaths } from '@/routes/paths.ts';
 import { SignUp } from '@/components/pages/Signup/page.tsx';
 import { AuthedRoute } from '@/routes/AuthedRoute.tsx';
+import { UserPage } from '@/components/pages/User/page.tsx';
 
 export const AppRoutes = () => {
   return (
@@ -17,6 +18,14 @@ export const AppRoutes = () => {
             </AuthedRoute>
           }
         />
+        <Route
+          path={routerPaths.user}
+          element={
+            <AuthedRoute>
+              <UserPage />
+            </AuthedRoute>
+          }
+        ></Route>
         <Route path={routerPaths.login} element={<Login />} />
         <Route path={routerPaths.signup} element={<SignUp />} />
       </Routes>
