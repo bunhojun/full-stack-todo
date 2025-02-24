@@ -1,6 +1,8 @@
 import { fetcher } from '@/apis/fetcher.ts';
 import { UserWithoutPassword } from '@/types/user.type.ts';
 
+export const LOGIN_PATH = '/auth/login';
+
 export const login = async ({
   email,
   password,
@@ -8,7 +10,7 @@ export const login = async ({
   email: string;
   password: string;
 }) => {
-  const res = await fetcher<UserWithoutPassword>('/auth/login', {
+  const res = await fetcher<UserWithoutPassword>(LOGIN_PATH, {
     method: 'POST',
     body: new URLSearchParams({ email, password }),
   });

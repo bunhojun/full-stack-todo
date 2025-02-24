@@ -15,7 +15,11 @@ export const Login = () => {
     setPassword(e.target.value);
   };
 
-  const { mutate, isSuccess: isLoginSuccess } = useMutation({
+  const {
+    mutate,
+    isSuccess: isLoginSuccess,
+    isPending,
+  } = useMutation({
     mutationFn: login,
   });
 
@@ -25,6 +29,10 @@ export const Login = () => {
       password,
     });
   };
+
+  if (isPending) {
+    return <div>Loading...</div>;
+  }
 
   if (isLoginSuccess) {
     return <Navigate replace to={routerPaths.home} />;

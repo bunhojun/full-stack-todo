@@ -4,6 +4,7 @@ import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import { ValidationPipe } from '@nestjs/common';
 import * as cookieParser from 'cookie-parser';
 import { ConfigService } from '@nestjs/config';
+import { DataSource } from 'typeorm';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
@@ -31,6 +32,10 @@ async function bootstrap() {
   SwaggerModule.setup('api', app, document, {
     swaggerOptions: { tagsSorter: 'alpha' },
   });
+
+  // migration
+  const dataSource = app.get(DataSource);
+  await dataSource.runMigrations();
 
   await app.listen(3000);
 }

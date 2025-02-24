@@ -12,7 +12,7 @@ import { Response } from 'express';
 import { AuthService } from '@/auth/auth.service';
 import { Public } from '@/auth/decorators/public.decorator';
 import { LocalAuthGuard } from '@/auth/guards/local-auth.guard';
-import { SignInDto } from '@/dto/sign-in.dto';
+import { SignInDto } from '@/auth/dto/sign-in.dto';
 import { ConfigService } from '@nestjs/config';
 import { JwtRefreshAuthGuard } from '@/auth/guards/jwt-refresh-auth.guard';
 import { UserWithoutPassword } from '@/users/types/user-without-password.type';
