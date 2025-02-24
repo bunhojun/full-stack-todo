@@ -1,11 +1,10 @@
 import { Link } from 'react-router';
 import { routerPaths } from '@/routes/paths.ts';
 import { useMutation, useQuery } from '@tanstack/react-query';
-import { addTask, getTasksByAuthorId, updateTask } from '@/apis/task/api.ts';
+import { addTask, getTasksByAuthorId } from '@/apis/task/api.ts';
 import { useAuth } from '@/hooks/useAuth.ts';
 import { ChangeEvent, useState } from 'react';
 import { TaskTable } from '@/components/pages/Home/Task/Table.tsx';
-import { Task, UpdateTaskDto } from '@/types/task.type.ts';
 
 export const Home = () => {
   const { user } = useAuth();
