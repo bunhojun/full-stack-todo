@@ -1,4 +1,5 @@
 import { routerPaths } from '@/routes/paths.ts';
+import { LOGIN_PATH } from '@/apis/auth/api.ts';
 
 export const fetcher = async <T>(
   path: string,
@@ -25,7 +26,7 @@ export const fetcher = async <T>(
       }
 
       // TODO distinguish access_token error and other 401 errors
-      if (res.status === 401) {
+      if (res.status === 401 && path !== LOGIN_PATH) {
         window.location.href = routerPaths.login;
       }
       // if (res.status === 401) {

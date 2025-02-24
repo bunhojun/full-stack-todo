@@ -5,12 +5,14 @@ import { AppService } from './app.service';
 import { UsersModule } from './users/users.module';
 import { AppDataSource } from '../db/data-source';
 import { AuthModule } from './auth/auth.module';
+import { TasksModule } from './tasks/tasks.module';
 
 @Module({
   imports: [
     TypeOrmModule.forRoot(AppDataSource.options),
     UsersModule,
     AuthModule,
+    TasksModule,
   ],
   controllers: [AppController],
   providers: [AppService],
