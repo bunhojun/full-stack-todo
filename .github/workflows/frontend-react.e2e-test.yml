@@ -15,9 +15,7 @@ jobs:
         with:
           node-version: '20'
       - name: Run Server
-        with:
-          working-directory: 'api'
-        run: >
+        run: |
           cp .env.sample .env
           yarn
           docker compose up -d
@@ -25,14 +23,13 @@ jobs:
           yarn typeorm migration:run -d ./db/data-source.ts
           yarn seed --name GenesisSeeder
           yarn start:dev
+        working-directory: 'api'
       - name: Install Playwright Browsers
-        with:
-          working-directory: 'frontend-react'
         run: yarn playwright install --with-deps
+        working-directory: 'frontend-react'
       - name: Run Playwright tests
-        with:
-          working-directory: 'frontend-react'
         run: yarn playwright test
+        working-directory: 'frontend-react'
       - uses: actions/upload-artifact@v4
         if: ${{ !cancelled() }}
         with:
