@@ -19,7 +19,7 @@ jobs:
           cp .env.sample .env
           yarn
           docker compose up -d
-          nest build
+          yarn build
           yarn typeorm migration:run -d ./db/data-source.ts
           yarn seed --name GenesisSeeder
           yarn start:dev
