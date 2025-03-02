@@ -17,6 +17,6 @@ export class AuthModel {
 
     const buttonSubmit = this.page.locator("button[data-testid='submit']");
     await buttonSubmit.click();
-    // console out response
+    await this.page.waitForResponse('http://localhost:3000/auth/login');
   }
 }
