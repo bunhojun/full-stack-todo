@@ -11,7 +11,7 @@ export class AuthModel {
     await this.page.goto('/login');
 
     const inputEmail = this.page.locator("input[data-testid='email']");
-    await inputEmail.fill('test@test.example.coma');
+    await inputEmail.fill('test@test.example.com');
     const inputPassword = this.page.locator("input[data-testid='password']");
     await inputPassword.fill('password!');
 
