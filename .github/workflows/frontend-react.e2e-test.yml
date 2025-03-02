@@ -34,10 +34,10 @@ jobs:
         run: screen -dmS nestjs yarn start:dev
         working-directory: 'api'
       - name: Install Playwright Browsers
-        run: yarn playwright install --with-deps
+        run: npx playwright install --with-deps
         working-directory: 'frontend-react'
       - name: Run Playwright tests
-        run: yarn playwright test
+        run: npx playwright test
         working-directory: 'frontend-react'
       - uses: actions/upload-artifact@v4
         if: ${{ !cancelled() }}
