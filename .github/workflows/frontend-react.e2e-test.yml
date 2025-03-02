@@ -20,10 +20,11 @@ jobs:
       - name: Api Install Dependencies
         run: yarn
         working-directory: 'api'
+      - name: Copy Api .env
+        run: cp .env.sample .env
+        working-directory: 'api'
       - name: Api Build
-        run: |
-          cp .env.sample .env
-          yarn build
+        run: yarn build
         working-directory: 'api'
       - name: Migration
         run: |
@@ -35,6 +36,9 @@ jobs:
         working-directory: 'api'
       - name: Install Frontend Dependencies
         run: yarn
+        working-directory: 'frontend-react'
+      - name: Copy Frontend .env
+        run: cp .env.sample .env
         working-directory: 'frontend-react'
       - name: Install Playwright Browsers
         run: yarn playwright install --with-deps
