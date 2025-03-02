@@ -11,11 +11,12 @@ export class AuthModel {
     await this.page.goto('/login');
 
     const inputEmail = this.page.locator("input[data-testid='email']");
-    await inputEmail.fill('test@test.example.com');
+    await inputEmail.fill('test@test.example.coma');
     const inputPassword = this.page.locator("input[data-testid='password']");
     await inputPassword.fill('password!');
 
     const buttonSubmit = this.page.locator("button[data-testid='submit']");
     await buttonSubmit.click();
+    // console out response
   }
 }
