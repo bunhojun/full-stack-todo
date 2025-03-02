@@ -14,21 +14,17 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: '20'
-      - name: Run Docker
-        run: docker compose up -d test-db
-        working-directory: 'api'
       - name: Api Install Dependencies
         run: yarn
         working-directory: 'api'
-      - name: Api Migration
+      - name: Run Server
         run: |
+          docker compose up -d test-db
           cp .env.sample .env
           yarn build
           yarn typeorm migration:run -d ./db/data-source.ts
           yarn seed --name GenesisSeeder
-        working-directory: 'api'
-      - name: Run Server
-        run: screen -dmS nestjs yarn start:dev
+          screen -dmS nestjs yarn start:dev
         working-directory: 'api'
       - name: Install Playwright Browsers
         run: npx playwright install --with-deps
