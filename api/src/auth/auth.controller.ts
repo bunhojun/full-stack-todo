@@ -16,6 +16,35 @@ import { SignInDto } from '@/auth/dto/sign-in.dto';
 import { ConfigService } from '@nestjs/config';
 import { JwtRefreshAuthGuard } from '@/auth/guards/jwt-refresh-auth.guard';
 import { UserWithoutPassword } from '@/users/types/user-without-password.type';
+import { UserAgent } from '@/auth/decorators/user-agent.decorator';
+import { UAParser } from 'ua-parser-js';
+
+const createOptions = (userAgent: string, configService: ConfigService) => {
+  const defaultOptions = {
+    httpOnly: configService.get('COOKIE_HTTPONLY') === 'true',
+    secure: configService.get('COOKIE_SECURE') === 'true',
+    sameSite: configService.get('COOKIE_SAME_SITE'),
+    domain: configService.get('COOKIE_DOMAIN'),
+  };
+  if (configService.get('ENVIRONMENT') === 'local') {
+    const parser = new UAParser(userAgent);
+    const browser = parser.getBrowser();
+
+    switch (browser.name) {
+      case 'Safari':
+        return {
+          httpOnly: configService.get('COOKIE_HTTPONLY') === 'true',
+          secure: configService.get('LOCAL_COOKIE_SAFARI_SECURE') === 'true',
+          sameSite: configService.get('COOKIE_SAME_SITE'),
+          domain: configService.get('COOKIE_DOMAIN'),
+        };
+      default:
+        return defaultOptions;
+    }
+  }
+
+  return defaultOptions;
+};
 
 @Controller('auth')
 export class AuthController {
@@ -36,6 +65,7 @@ export class AuthController {
   @Post('login')
   async signIn(
     @Body() _signInDto: SignInDto,
+    @UserAgent() userAgent: string,
     @Request() req: { user: UserWithoutPassword }, // The user object is attached to the request object after LocalAuthGuard validation
     @Res({
       passthrough: true, // This option is necessary to set cookies in the response
@@ -45,12 +75,7 @@ export class AuthController {
     const { access_token, refresh_token } = await this.authService.createToken(
       req.user,
     );
-    const options = {
-      httpOnly: this.configService.get<boolean>('COOKIE_HTTPONLY'),
-      secure: this.configService.get<boolean>('COOKIE_SECURE'),
-      sameSite: this.configService.get('COOKIE_SAME_SITE'),
-      domain: this.configService.get<string>('COOKIE_DOMAIN'),
-    };
+    const options = createOptions(userAgent, this.configService);
     response
       .cookie('access_token', access_token, {
         ...options,
@@ -68,17 +93,13 @@ export class AuthController {
   @Post('refresh')
   async refreshToken(
     @Request() req: { user: UserWithoutPassword }, // The user object is attached to the request object after JwtRefreshAuthGuard validation
+    @UserAgent() userAgent: string,
     @Res({ passthrough: true }) response: Response,
   ) {
     const { access_token, refresh_token } = await this.authService.createToken(
       req.user,
     );
-    const options = {
-      httpOnly: this.configService.get<boolean>('COOKIE_HTTPONLY'),
-      secure: this.configService.get<boolean>('COOKIE_SECURE'),
-      sameSite: this.configService.get('COOKIE_SAME_SITE'),
-      domain: this.configService.get<string>('COOKIE_DOMAIN'),
-    };
+    const options = createOptions(userAgent, this.configService);
     response
       .cookie('access_token', access_token, {
         ...options,
