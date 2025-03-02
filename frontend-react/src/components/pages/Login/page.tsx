@@ -42,19 +42,23 @@ export const Login = () => {
     <div>
       <h1>Login</h1>
       <form>
+        <label htmlFor="email">Email</label>
         <input
+          data-testid="email"
           type="email"
           placeholder="email"
           value={email}
           onChange={onChangeEmail}
         />
+        <label htmlFor="password">Password</label>
         <input
+          data-testid="password"
           type="password"
           placeholder="password"
           value={password}
           onChange={onChangePassword}
         />
-        <button type="button" onClick={onClickSubmit}>
+        <button data-testid="submit" type="button" onClick={onClickSubmit}>
           Submit
         </button>
       </form>

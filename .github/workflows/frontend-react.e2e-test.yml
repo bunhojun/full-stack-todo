@@ -1,0 +1,41 @@
+name: Playwright Tests
+
+on: pull_request
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        shell: bash
+    timeout-minutes: 60
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+      - name: Run Server
+        with:
+          working-directory: 'api'
+        run: >
+          cp .env.sample .env
+          yarn
+          docker compose up -d
+          nest build
+          yarn typeorm migration:run -d ./db/data-source.ts
+          yarn seed --name GenesisSeeder
+          yarn start:dev
+      - name: Install Playwright Browsers
+        with:
+          working-directory: 'frontend-react'
+        run: yarn playwright install --with-deps
+      - name: Run Playwright tests
+        with:
+          working-directory: 'frontend-react'
+        run: yarn playwright test
+      - uses: actions/upload-artifact@v4
+        if: ${{ !cancelled() }}
+        with:
+          name: playwright-report
+          path: playwright-report/
+          retention-days: 30

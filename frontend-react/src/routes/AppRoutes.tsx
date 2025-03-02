@@ -25,7 +25,7 @@ export const AppRoutes = () => {
               <UserPage />
             </AuthedRoute>
           }
-        ></Route>
+        />
         <Route path={routerPaths.login} element={<Login />} />
         <Route path={routerPaths.signup} element={<SignUp />} />
       </Routes>
