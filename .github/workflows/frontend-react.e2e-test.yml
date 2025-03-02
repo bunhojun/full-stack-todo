@@ -19,7 +19,7 @@ jobs:
         working-directory: 'api'
       - name: Run Server
         run: |
-          docker compose up -d test-db
+          docker compose up -d
           cp .env.sample .env
           yarn build
           yarn typeorm migration:run -d ./db/data-source.ts
