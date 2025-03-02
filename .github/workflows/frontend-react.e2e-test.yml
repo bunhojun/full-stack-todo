@@ -22,7 +22,7 @@ jobs:
           yarn build
           yarn typeorm migration:run -d ./db/data-source.ts
           yarn seed --name GenesisSeeder
-          yarn start:dev
+          screen -dmS nestjs yarn start:dev
         working-directory: 'api'
       - name: Install Playwright Browsers
         run: yarn playwright install --with-deps
