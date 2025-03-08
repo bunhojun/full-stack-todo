@@ -9,7 +9,12 @@ test.beforeAll(async ({ browser }) => {
 });
 
 test('add task', async () => {
+  console.log('add task');
   await page.goto('/');
+  const initialTasks = await page.waitForResponse(
+    'http://localhost:3000/tasks',
+  );
+  console.log(await initialTasks.json());
   const inputTask = page.locator("input[data-testid='task']");
   await inputTask.fill('new task');
   const buttonAddTask = page.locator("button[data-testid='submit']");
