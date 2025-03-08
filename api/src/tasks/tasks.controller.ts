@@ -8,14 +8,12 @@ import {
   Delete,
   ParseIntPipe,
   HttpCode,
-  Request,
   Query,
 } from '@nestjs/common';
 import { TasksService } from '@/tasks/tasks.service';
 import { CreateTaskDto } from '@/tasks/dto/create-task.dto';
 import { UpdateTaskDto } from '@/tasks/dto/update-task.dto';
 import { ApiQuery } from '@nestjs/swagger';
-import { UserWithoutPassword } from '@/users/types/user-without-password.type';
 
 @Controller('tasks')
 export class TasksController {
