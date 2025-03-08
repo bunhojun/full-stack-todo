@@ -26,7 +26,6 @@ export class AuthModel {
       'http://localhost:3000/auth/login',
     );
     const response = await res.json();
-    console.log(response);
     return {
       ...response,
       password,
@@ -44,5 +43,13 @@ export class AuthModel {
     const buttonSubmit = this.page.locator("button[data-testid='submit']");
     await buttonSubmit.click();
     await this.page.waitForResponse('http://localhost:3000/auth/login');
+  }
+
+  async goToAuthedPage(path: string) {
+    await this.page.goto(path);
+    const res = await this.page.waitForResponse('http://localhost:3000/auth');
+    const response = await res.json();
+    console.log('authed user', response);
+    return response;
   }
 }
