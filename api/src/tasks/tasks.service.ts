@@ -5,7 +5,6 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Task } from '@/tasks/entities/task.entity';
 import { Repository } from 'typeorm';
 import { User } from '@/users/entities/user.entity';
-import { UserWithoutPassword } from '@/users/types/user-without-password.type';
 
 @Injectable()
 export class TasksService {
