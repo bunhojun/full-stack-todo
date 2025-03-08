@@ -25,7 +25,7 @@ export class AuthModel {
     const res = await this.page.waitForResponse(
       'http://localhost:3000/auth/login',
     );
-    expect(res.status()).toBe(200);
+    expect(res.status()).toBe(201);
     const response = await res.json();
     return {
       ...response,
@@ -46,7 +46,7 @@ export class AuthModel {
     const res = await this.page.waitForResponse(
       'http://localhost:3000/auth/login',
     );
-    expect(res.status()).toBe(200);
+    expect(res.status()).toBe(201);
   }
 
   async goToAuthedPage(path: string) {
