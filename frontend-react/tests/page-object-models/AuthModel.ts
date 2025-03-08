@@ -25,8 +25,10 @@ export class AuthModel {
     const res = await this.page.waitForResponse(
       'http://localhost:3000/auth/login',
     );
+    const response = await res.json();
+    console.log(response);
     return {
-      ...(await res.json()),
+      ...response,
       password,
     };
   }

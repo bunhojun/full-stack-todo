@@ -9,6 +9,7 @@ import {
   ParseIntPipe,
   HttpCode,
   Query,
+  DefaultValuePipe,
 } from '@nestjs/common';
 import { TasksService } from '@/tasks/tasks.service';
 import { CreateTaskDto } from '@/tasks/dto/create-task.dto';
@@ -34,11 +35,11 @@ export class TasksController {
   findAll(
     // TODO: add authorization or use role guard
     // @Request() req: { user: UserWithoutPassword },
-    @Query('authorId', ParseIntPipe) authorId?: number,
+    @Query('authorId', new DefaultValuePipe(-1), ParseIntPipe) authorId: number,
   ) {
     return this.tasksService.findAll(
       // req.user,
-      authorId,
+      authorId >= 0 ? authorId : undefined,
     );
   }
 
