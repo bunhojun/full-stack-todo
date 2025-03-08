@@ -60,9 +60,19 @@ export const Home = () => {
       <form>
         <label>
           <span>new task</span>
-          <input type="text" value={newTask} onChange={onChangeTaskInput} />
+          <input
+            data-testid="task"
+            type="text"
+            value={newTask}
+            onChange={onChangeTaskInput}
+          />
         </label>
-        <button type="button" disabled={isAddingTask} onClick={onAddTask}>
+        <button
+          data-testid="submit"
+          type="button"
+          disabled={isAddingTask}
+          onClick={onAddTask}
+        >
           Add Task
         </button>
       </form>
