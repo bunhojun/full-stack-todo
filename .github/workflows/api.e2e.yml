@@ -17,7 +17,7 @@ jobs:
       - uses: actions/checkout@v4 # checks-out the repository under $GITHUB_WORKSPACE
       - uses: actions/setup-node@v4
         with:
-          node-version: '20'
+          node-version: '22'
       - run: yarn
       - run: docker compose up -d test-db
       - run: yarn build
