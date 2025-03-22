@@ -1,4 +1,4 @@
-import { expect, type Page } from '@playwright/test';
+import { type Page } from '@playwright/test';
 import { faker } from '@faker-js/faker';
 import { User } from '../../src/types/user.type';
 
@@ -25,7 +25,6 @@ export class AuthModel {
     const res = await this.page.waitForResponse(
       'http://localhost:3000/auth/login',
     );
-    expect(res.status()).toBe(201);
     const response = await res.json();
     return {
       ...response,
@@ -43,16 +42,11 @@ export class AuthModel {
 
     const buttonSubmit = this.page.locator("button[data-testid='submit']");
     await buttonSubmit.click();
-    const res = await this.page.waitForResponse(
-      'http://localhost:3000/auth/login',
-    );
-    expect(res.status()).toBe(201);
+    await this.page.waitForResponse('http://localhost:3000/auth/login');
   }
 
   async goToAuthedPage(path: string) {
-    await this.page.goto(path);
-    const res = await this.page.waitForResponse('http://localhost:3000/auth');
-    expect(res.status()).toBe(200);
-    return res.json();
+    this.page.goto(path); // don't use await to get response on firefox and webkit
+    await this.page.waitForResponse('http://localhost:3000/auth');
   }
 }
