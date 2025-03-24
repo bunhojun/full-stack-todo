@@ -1,4 +1,4 @@
-import { type Page } from '@playwright/test';
+import { expect, type Page } from '@playwright/test';
 import { faker } from '@faker-js/faker';
 import { User } from '../../src/types/user.type';
 
@@ -46,7 +46,10 @@ export class AuthModel {
   }
 
   async goToAuthedPage(path: string) {
-    this.page.goto(path); // don't use await to get response on firefox and webkit
-    await this.page.waitForResponse('http://localhost:3000/auth');
+    // use Promise.all as a workaround for browser navigation issue
+    await Promise.all([
+      this.page.goto(path),
+      this.page.waitForResponse('http://localhost:3000/auth'),
+    ]);
   }
 }
