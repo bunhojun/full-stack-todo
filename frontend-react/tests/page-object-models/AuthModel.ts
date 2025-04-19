@@ -1,4 +1,4 @@
-import { expect, type Page } from '@playwright/test';
+import { type Page } from '@playwright/test';
 import { faker } from '@faker-js/faker';
 import { User } from '../../src/types/user.type';
 
@@ -46,10 +46,32 @@ export class AuthModel {
   }
 
   async goToAuthedPage(path: string) {
-    // use Promise.all as a workaround for browser navigation issue
-    await Promise.all([
-      this.page.goto(path),
-      this.page.waitForResponse('http://localhost:3000/auth'),
-    ]);
+    // First ensure we're authenticated by waiting for a successful auth response
+    const authResponse = await this.page.request.get(
+      'http://localhost:3000/auth',
+      {
+        failOnStatusCode: false,
+      },
+    );
+
+    // If auth failed, we need to re-authenticate
+    if (authResponse.status() === 401) {
+      // We're already on the login page or will be redirected there
+      // Let's wait for any navigation to complete
+      await this.page.waitForLoadState('networkidle');
+    }
+
+    // Now navigate to the requested page
+    await this.page.goto(path);
+
+    // Instead of waiting for a specific auth response that might not come,
+    // wait for the page to be fully loaded and stable
+    await this.page.waitForLoadState('networkidle');
+
+    // Verify we're on the expected page and not redirected to login
+    const currentUrl = this.page.url();
+    if (currentUrl.includes('/login')) {
+      throw new Error(`Navigation to ${path} failed, redirected to login page`);
+    }
   }
 }
