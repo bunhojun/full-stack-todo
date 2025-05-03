@@ -14,7 +14,7 @@ export class AuthModel {
     const uniqueEmail = `${userName}+${Date.now()}@example.com`;
     const password = faker.internet.password();
 
-    await this.page.goto('/signup');
+    await this.page.goto('/signup', { waitUntil: 'networkidle' });
     const inputName = this.page.locator("input[data-testid='name']");
     await inputName.fill(userName);
     const inputEmail = this.page.locator("input[data-testid='email']");
@@ -33,7 +33,7 @@ export class AuthModel {
   }
 
   async login(user: User) {
-    await this.page.goto('/login');
+    await this.page.goto('/login', { waitUntil: 'networkidle' });
 
     const inputEmail = this.page.locator("input[data-testid='email']");
     await inputEmail.fill(user.email);
@@ -48,7 +48,7 @@ export class AuthModel {
   async goToAuthedPage(path: string) {
     // use Promise.all as a workaround for browser navigation issue
     await Promise.all([
-      this.page.goto(path),
+      this.page.goto(path, { waitUntil: 'networkidle' }),
       this.page.waitForResponse('http://localhost:3000/auth'),
     ]);
   }
