@@ -12,7 +12,7 @@ test.beforeAll(async ({ browser }) => {
 
 test('add task success', async () => {
   await authModel.goToAuthedPage('/');
-  const inputTask = page.locator("input[data-testid='task']");
+  const inputTask = page.locator("input[data-testid='add-task']");
   await inputTask.fill('new task');
   const buttonAddTask = page.locator("button[data-testid='submit']");
   await buttonAddTask.click();

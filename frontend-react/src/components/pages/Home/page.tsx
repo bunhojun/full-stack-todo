@@ -61,7 +61,7 @@ export const Home = () => {
         <label>
           <span>new task</span>
           <input
-            data-testid="task"
+            data-testid="add-task"
             type="text"
             value={newTask}
             onChange={onChangeTaskInput}
