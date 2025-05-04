@@ -46,9 +46,9 @@ export class AuthModel {
   }
 
   async goToAuthedPage(path: string) {
-    // use Promise.all as a workaround for browser navigation issue
+    // use Promise.all as a workaround for multiple browser navigation issue
     await Promise.all([
-      this.page.goto(path, { waitUntil: 'networkidle' }),
+      this.page.goto(path),
       this.page.waitForResponse('http://localhost:3000/auth'),
     ]);
     await this.page.waitForLoadState('networkidle');
