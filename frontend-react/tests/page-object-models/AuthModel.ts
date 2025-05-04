@@ -51,5 +51,6 @@ export class AuthModel {
       this.page.goto(path, { waitUntil: 'networkidle' }),
       this.page.waitForResponse('http://localhost:3000/auth'),
     ]);
+    await this.page.waitForLoadState('networkidle');
   }
 }
