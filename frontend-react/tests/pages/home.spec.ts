@@ -4,7 +4,7 @@ import { AuthModel } from '../page-object-models/AuthModel';
 let page: Page;
 let authModel: AuthModel;
 
-test.beforeAll(async ({ browser }) => {
+test.beforeEach(async ({ browser }) => {
   page = await browser.newPage();
   authModel = new AuthModel(page);
   const user = await authModel.signup();
