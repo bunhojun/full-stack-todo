@@ -7,11 +7,12 @@ let authModel: AuthModel;
 test.beforeAll(async ({ browser }) => {
   page = await browser.newPage();
   authModel = new AuthModel(page);
-  await authModel.signup();
+  const user = await authModel.signup();
+  await authModel.login(user);
 });
 
 test('add task success', async () => {
-  await authModel.goToAuthedPage('/');
+  await page.goto('/', { waitUntil: 'networkidle' });
   const inputTask = page.locator("input[data-testid='add-task']");
   await inputTask.fill('new task');
   const buttonAddTask = page.locator("button[data-testid='submit']");
