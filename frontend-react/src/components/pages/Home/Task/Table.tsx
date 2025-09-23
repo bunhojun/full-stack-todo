@@ -83,7 +83,7 @@ const TaskRow = ({ task }: TaskRowProps) => {
 
   return (
     <tr>
-      <td>{task.content}</td>
+      <td data-testid={task.content}>{task.content}</td>
       <td>{convertStatus(task.status)}</td>
       {/*<td>*/}
       {/*  <button onClick={onClickEdit}>Edit</button>*/}

@@ -54,17 +54,30 @@ export const SignUp = () => {
       <h1>Sign Up</h1>
       <form>
         <label htmlFor="name">Name</label>
-        <input type="text" id="name" name="name" onChange={onChangeName} />
+        <input
+          data-testid="name"
+          type="text"
+          id="name"
+          name="name"
+          onChange={onChangeName}
+        />
         <label htmlFor="email">Email</label>
-        <input type="email" id="email" name="email" onChange={onChangeEmail} />
+        <input
+          data-testid="email"
+          type="email"
+          id="email"
+          name="email"
+          onChange={onChangeEmail}
+        />
         <label htmlFor="password">Password</label>
         <input
+          data-testid="password"
           type="password"
           id="password"
           name="password"
           onChange={onChangePassword}
         />
-        <button type="button" onClick={onClickSubmit}>
+        <button data-testid="submit" type="button" onClick={onClickSubmit}>
           Sign Up
         </button>
       </form>

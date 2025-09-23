@@ -8,6 +8,8 @@ import {
   Delete,
   ParseIntPipe,
   HttpCode,
+  Query,
+  DefaultValuePipe,
 } from '@nestjs/common';
 import { TasksService } from '@/tasks/tasks.service';
 import { CreateTaskDto } from '@/tasks/dto/create-task.dto';
@@ -30,13 +32,15 @@ export class TasksController {
     required: false,
     description: 'Filter tasks by authorId',
   })
-  findAll() {
-    return this.tasksService.findAll();
-  }
-
-  @Get()
-  findTasksByAuthorId(@Param('authorId', ParseIntPipe) authorId: number) {
-    return this.tasksService.findTasksByAuthorId(authorId);
+  findAll(
+    // TODO: add authorization or use role guard
+    // @Request() req: { user: UserWithoutPassword },
+    @Query('authorId', new DefaultValuePipe(-1), ParseIntPipe) authorId: number,
+  ) {
+    return this.tasksService.findAll(
+      // req.user,
+      authorId >= 0 ? authorId : undefined,
+    );
   }
 
   @Get(':id')

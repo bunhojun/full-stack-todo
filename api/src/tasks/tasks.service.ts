@@ -36,8 +36,27 @@ export class TasksService {
     return this.findOne(savedTask.id);
   }
 
-  findAll() {
-    return this.tasksRepository.find();
+  findAll(
+    // user: UserWithoutPassword,
+    authorId?: number,
+  ) {
+    // TODO: add authorization
+    // if (user.role === 'normal' && user.id !== authorId) {
+    //   throw new HttpException(
+    //     {
+    //       message: 'You are not allowed to access this resource',
+    //     },
+    //     HttpStatus.FORBIDDEN,
+    //   );
+    // }
+    return this.tasksRepository.find({
+      where: {
+        authorId,
+      },
+      order: {
+        updatedAt: 'DESC',
+      },
+    });
   }
 
   async findOne(id: number) {
@@ -47,17 +66,6 @@ export class TasksService {
       },
       relations: {
         author: true,
-      },
-    });
-  }
-
-  async findTasksByAuthorId(authorId: number) {
-    return this.tasksRepository.find({
-      where: {
-        authorId,
-      },
-      order: {
-        updatedAt: 'DESC',
       },
     });
   }
