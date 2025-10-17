@@ -1,5 +1,5 @@
 # Build Stage
-FROM node:22.11.0-slim AS build
+FROM node:22.20.0-slim AS build
 
 WORKDIR /app
 
@@ -10,7 +10,7 @@ COPY . .
 RUN yarn build
 
 # Runtime Stage
-FROM node:22.11.0-slim
+FROM node:22.20.0-slim
 
 WORKDIR /app
 
