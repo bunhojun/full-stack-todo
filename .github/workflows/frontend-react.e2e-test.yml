@@ -4,7 +4,7 @@ on: pull_request
 
 jobs:
   check:
-    runs-on: ubuntu-latest
+    runs-on: buildjet-16vcpu-ubuntu-2204
     defaults:
       run:
         shell: bash
@@ -31,9 +31,18 @@ jobs:
           yarn typeorm migration:run -d ./db/data-source.ts
           yarn seed --name GenesisSeeder
         working-directory: 'api'
-      - name: Run Server
-        run: screen -dmS nestjs yarn start:dev
+      - name: Start Backend (with logging)
         working-directory: 'api'
+        run: |
+          nohup yarn start:dev > backend.log 2>&1 &
+          echo "Waiting for NestJS to start..."
+          for i in {1..15}; do
+            if grep -q "Nest application successfully started" backend.log; then
+              echo "NestJS is up."
+              break
+            fi
+            sleep 1
+          done
       - name: Install Frontend Dependencies
         run: yarn
         working-directory: 'frontend-react'
@@ -46,9 +55,17 @@ jobs:
       - name: Run Playwright tests
         run: yarn playwright test
         working-directory: 'frontend-react'
-      - uses: actions/upload-artifact@v4
-        if: ${{ !cancelled() }}
+      - name: Upload Playwright Report
+        if: always()
+        uses: actions/upload-artifact@v4
         with:
           name: playwright-report
-          path: playwright-report/
+          path: frontend-react/playwright-report/
+          retention-days: 30
+      - name: Upload Backend Logs
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: backend-log
+          path: api/backend.log
           retention-days: 30
